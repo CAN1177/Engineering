@@ -16,7 +16,7 @@
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"foo\": () => (/* binding */ foo),\n/* harmony export */   \"log\": () => (/* binding */ log)\n/* harmony export */ });\nconst foo = 'hello world';\n\nfunction log(message) {\n  console.log(message);\n}\n\n//# sourceURL=webpack://my-project/./src/foo.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"foo\": () => (/* binding */ foo),\n/* harmony export */   \"log\": () => (/* binding */ log)\n/* harmony export */ });\nvar foo = 'hello world';\nfunction log(message) {\n  console.log(message);\n}\n\n//# sourceURL=webpack://my-project/./src/foo.js?");
 
 /***/ }),
 
@@ -26,7 +26,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _foo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./foo.js */ \"./src/foo.js\");\n\n\n(0,_foo_js__WEBPACK_IMPORTED_MODULE_0__.log)(_foo_js__WEBPACK_IMPORTED_MODULE_0__.foo);\n\n//# sourceURL=webpack://my-project/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _foo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./foo.js */ \"./src/foo.js\");\n/* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.less */ \"./src/index.less\");\n\n\n(0,_foo_js__WEBPACK_IMPORTED_MODULE_0__.log)(_foo_js__WEBPACK_IMPORTED_MODULE_0__.foo);\nvar div = document.createElement('div');\ndiv.className = 'container';\ndiv.innerHTML = '<div class=\"box\">hello webpack</div><div class=\"tuts\"></div>';\ndocument.body.appendChild(div);\n\n//# sourceURL=webpack://my-project/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/index.less":
+/*!************************!*\
+  !*** ./src/index.less ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://my-project/./src/index.less?");
 
 /***/ })
 
