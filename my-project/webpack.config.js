@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin 
 
 module.exports = {
   mode: 'development', // 指定构建模式
@@ -12,6 +13,7 @@ module.exports = {
     filename: 'bundle.js', // 指定构建生成的文件名
   },
   plugins: [
+    new BundleAnalyzerPlugin(), // 分析打包大小使用默认配置
     new HtmlWebpackPlugin({
       template: 'src/index.html', // 配置文件模板
     }),
@@ -65,5 +67,5 @@ module.exports = {
   },
   devServer: {
     static: path.resolve(__dirname, 'dist') // 开发服务器启动路径
-  },
+  }, 
 }
