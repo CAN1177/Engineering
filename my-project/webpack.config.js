@@ -1,12 +1,24 @@
 const path = require('path')
+const fs = require('fs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin 
 
+
+// src/pages 目录为页面入口的根目录
+const pagesRoot =path.resolve(__dirname, './src/pages')
+// fs 读取 pages 下的所有文件夹来作为入口，使用 entries 对象记录下来
+const entries = fs.readdirSync(pagesRoot).reduce((entries, page) => {
+  entries[page] = path.resolve(pagesRoot, page)
+  return entries;
+}, {})
+
+
 module.exports = {
   mode: 'development', // 指定构建模式
-
-  entry: './src/index.js', // 指定构建入口文件
+  // 将 entries 对象作为入口配置
+  entry: entries,
+  // entry: './src/index.js', // 指定构建入口文件
 
   output: {
     path: path.resolve(__dirname, 'dist'), // 指定构建生成文件所在路径
@@ -46,7 +58,7 @@ module.exports = {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'url-loader',
             options: {},
           },
         ],
