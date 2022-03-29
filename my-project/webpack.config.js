@@ -46,6 +46,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
         test: /\.less$/,
         use: [
           // 因为这个插件需要干涉模块转换的内容，所以需要使用它对应的 loader
@@ -78,6 +82,7 @@ module.exports = {
     ],
   },
   devServer: {
-    static: path.resolve(__dirname, 'dist') // 开发服务器启动路径
+    static: path.resolve(__dirname, 'dist'), // 开发服务器启动路径
+    hot: true,
   }, 
 }
