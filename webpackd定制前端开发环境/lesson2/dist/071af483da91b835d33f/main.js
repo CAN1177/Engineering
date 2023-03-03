@@ -10,23 +10,23 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/pages/foo/index.js":
-/*!********************************!*\
-  !*** ./src/pages/foo/index.js ***!
-  \********************************/
+/***/ "./src/foo.js":
+/*!********************!*\
+  !*** ./src/foo.js ***!
+  \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _index_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../index.html */ \"./src/index.html\");\n\n\n//# sourceURL=webpack://my-project/./src/pages/foo/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"foo\": () => (/* binding */ foo),\n/* harmony export */   \"log\": () => (/* binding */ log)\n/* harmony export */ });\nvar foo = 'hello world';\nfunction log(message) {\n  console.log(message);\n}\n\n//# sourceURL=webpack://lesson2/./src/foo.js?");
 
 /***/ }),
 
-/***/ "./src/index.html":
-/*!************************!*\
-  !*** ./src/index.html ***!
-  \************************/
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n// Module\nvar code = \"<!DOCTYPE html>\\n<html lang=\\\"en\\\">\\n<head>\\n  <meta charset=\\\"UTF-8\\\">\\n  <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n  <meta http-equiv=\\\"X-UA-Compatible\\\" content=\\\"ie=edge\\\">\\n  <title>hello webpack</title>\\n</head>\\n<body>\\n\\n</body>\\n</html>\";\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);\n\n//# sourceURL=webpack://my-project/./src/index.html?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _foo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./foo.js */ \"./src/foo.js\");\n\n(0,_foo_js__WEBPACK_IMPORTED_MODULE_0__.log)(_foo_js__WEBPACK_IMPORTED_MODULE_0__.foo);\n\n//# sourceURL=webpack://lesson2/./src/index.js?");
 
 /***/ })
 
@@ -90,7 +90,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/pages/foo/index.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
 /******/ 	
 /******/ })()
 ;
