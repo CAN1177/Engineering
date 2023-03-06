@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist/[hash]/"), // 使用 hash
     filename: "[name].js", // 使用 entry 名称
-    clean: true
+    clean: true,
   },
 
   module: {
@@ -33,25 +33,26 @@ module.exports = {
       {
         test: /\.css/,
         include: [path.resolve(__dirname, "src")],
-        use: [ MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.less$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'less-loader',
-        ]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
       },
       {
         test: /\.(png | jpg | gif)$/,
         use: [
           {
-            loader: 'url-loader',
-            options: {}
-          }
-        ]
-      }
+            loader: "url-loader",
+            options: {
+              esModule: false, // 这里设置为false
+              // 如果图片大小小于这个值，就会被打包为base64格式
+              limit: 10 * 10000,
+              name: "[hash1000].[ext]",
+            },
+          },
+        ],
+      },
     ],
   },
 
