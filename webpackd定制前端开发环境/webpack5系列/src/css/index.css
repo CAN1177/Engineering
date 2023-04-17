@@ -1,0 +1,13 @@
+.title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 200px;
+	background-color: pink;
+}
+.title:hover {
+	border: 2px solid skyblue;
+	border-radius: 5px;
+	cursor: pointer;
+}
