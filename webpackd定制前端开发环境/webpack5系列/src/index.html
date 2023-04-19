@@ -7,10 +7,10 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
+    <div id="app"></div>
     <h1 class="title">index页面配置模版</h1>
-    <div class="content">
-      内容区域
-    </div>
-		<img src="./images/song.jpeg" alt="999" />
+    <div class="content">内容区域</div>
+    <!-- <img src="./images/song.jpeg" alt="999" /> -->
+    <img src="<%= require('./images/song.jpeg') %>" alt="" />
   </body>
 </html>
