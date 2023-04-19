@@ -103,6 +103,28 @@ module.exports = {
           filename: "img/[name].[hash:6][ext]",
         },
       },
+      {
+        test: /\.text$/,
+        use: [
+          {
+            loader: path.resolve(__dirname, "../loader/loaderText.js"),
+          },
+        ],
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: path.resolve(__dirname, "../loader/addDivLoader.js"),
+          },
+          {
+            loader: path.resolve(__dirname, "../loader/mdLoader.js"),
+            options: {
+              headerIds: false, // 不生成标题id
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {

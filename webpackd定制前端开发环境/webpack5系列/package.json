@@ -21,6 +21,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.1",
+    "marked": "^4.3.0",
     "mini-css-extract-plugin": "^2.7.5",
     "postcss-loader": "^7.2.4",
     "style-loader": "^3.3.2",
