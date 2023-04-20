@@ -3,6 +3,8 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+const { MyPlugin } = require("../plugin/MyPlugin");
+
 module.exports = {
   // 多入口
   entry: {
@@ -28,6 +30,9 @@ module.exports = {
       filename: "css/[name].css",
     }),
     new VueLoaderPlugin(),
+    new MyPlugin({
+      info: '12132434'
+    }),
   ],
   module: {
     rules: [
