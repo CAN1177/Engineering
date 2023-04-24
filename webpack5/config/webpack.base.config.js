@@ -1,19 +1,36 @@
 const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
+  // entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+    mine: './src/mine.js',
+  },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, '../dist'),
     clean: true, // 清理dist目录
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
+  plugins: [
+    new BundleAnalyzerPlugin(),
+  ],
   module: {
     rules: [
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
       {
         test: /\.less$/,
         use: [
@@ -64,29 +81,4 @@ module.exports = {
       changeOrigin: true, // 支持跨域  覆盖源主机名
     },
   },
-  plugins: [
-    new HTMLWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
-      title: '首页',
-    }),
-    new HTMLWebpackPlugin({
-      template: './src/index.html',
-      filename: 'mine.html',
-      title: '我的',
-      minify: {
-        removeComments: true, // 移除注释
-        collapseWhitespace: true, // 移除空格
-      },
-    }),
-    new MiniCssExtractPlugin({
-      filename: './css/index.css',
-    }),
-    new OptimizeCssAssetsWebpackPlugin(),
-    new ESLintPlugin({
-      exclude: 'dist', // 排除dist目录
-      extensions: ['js', 'jsx', 'ts', 'tsx'],
-      fix: true,
-    }),
-  ],
 };
