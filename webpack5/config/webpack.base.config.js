@@ -4,7 +4,10 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+// eslint-disable-next-line import/no-unresolved
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   // entry: './src/index.js',
@@ -13,18 +16,35 @@ module.exports = {
     mine: './src/mine.js',
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].bundle.[hash].js',
     path: path.resolve(__dirname, '../dist'),
     clean: true, // 清理dist目录
   },
+  resolve: {
+    alias: {
+      // 指定路径的别名
+      '@': path.resolve('src'),
+    },
+    // 自动解析模块的后缀名
+    extensions: ['.js', '.json', '.less'],
+  },
+  externals: { // 排除第三方包
+    jquery: 'jQuery',
+  },
+  devtool: 'source-map',
   optimization: {
     splitChunks: {
       chunks: 'all',
     },
+    // 标记未使用的代码
+    usedExports: true,
+    // 删除已经标记未使用的代码
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
-  plugins: [
-    new BundleAnalyzerPlugin(),
-  ],
+  // plugins: [
+  //   new BundleAnalyzerPlugin(),
+  // ],
   module: {
     rules: [
       {
@@ -48,6 +68,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            cacheDirectory: true, // 开启缓存
             presets: [
               [
                 '@babel/preset-env',
