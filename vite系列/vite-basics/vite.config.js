@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import postcssNested from 'postcss-nested'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,6 +9,13 @@ export default defineConfig({
   optimizeDeps: {
     // 预购建中强制排出某项依赖
     exclude: ["lodash-es"], // 排除lodash-es依赖,然后会长时间加载(65s左右)
+  },
+  css: {
+    postcss: {
+        plugins: [ 
+            postcssNested 
+        ]
+    } 
   },
   server: {
     open: false,
