@@ -17,6 +17,11 @@ export default defineConfig({
         ]
     } 
   },
+  resolve: {
+    alias: {
+      "@": "/src", // 设置别名,直接@src下的文件
+    },
+  },
   server: {
     open: false,
     host: "127.0.0.1",
