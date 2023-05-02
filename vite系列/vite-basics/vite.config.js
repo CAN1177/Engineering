@@ -15,6 +15,7 @@ export default defineConfig({
     port: 3456,
     proxy: {
       "^/api/": {
+        // target: config.VITE_TARGET
         target: "https://www.bilibili.com/", // 后台服务器地址
         changeOrigin: true /* 允许跨域 */,
         rewrite: (path) => path.replace(/^\/api/, ""),
