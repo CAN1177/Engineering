@@ -4,13 +4,41 @@ import traverse from "@babel/traverse";
 import path from "path";
 import ejs from "ejs";
 import { transformFromAst } from "babel-core";
+import  webpackConfig  from "./webpackConfig.js";
+
 let id = 0;
+
+
+
+// const hooks = {
+//   emitFile: new SyncHook(["context"]),
+// };
 
 function createAsset(filePath) {
   // 1、获取文件内容
 
-  const source = fs.readFileSync(filePath, "utf-8");
+  let source = fs.readFileSync(filePath, "utf-8");
   // console.log("%c Line:11 🍆 source", "color:#e41a6a", source);
+
+  // 获取资源后开始执行loader=== initLoader
+  const loaders = webpackConfig.module.rules;
+
+  const loaderContext = {
+    addDeps(dep) {
+      console.log("addDeps", dep);
+    },
+  };
+
+  loaders.forEach(({ test, use }) => {
+    if (test.test(filePath)) {
+      // source = use(source);
+      if (Array.isArray(use)) { 
+        use.forEach((fn) => {
+          source = fn.call(loaderContext,source);
+        })
+      }
+    }
+  });
 
   /**
    * 获取依赖关系
@@ -27,20 +55,19 @@ function createAsset(filePath) {
     ImportDeclaration({ node }) {
       deps.push(node.source.value);
     },
-	});
-	const { code } = transformFromAst(ast, null, {
-		presets: ['env']
-	})
-	
-	console.log("%c Line:31 🍫 code", "color:#3f7cff", code);
+  });
+  const { code } = transformFromAst(ast, null, {
+    presets: ["env"],
+  });
 
+  console.log("%c Line:31 🍫 code", "color:#3f7cff", code);
 
   // console.log("%c Line:17 🍕 ast", "color:#ffdd4d", ast);
   return {
     filePath,
     code,
-		deps,
-		mapping: {},
+    deps,
+    mapping: {},
     id: id++,
   };
 }
@@ -60,8 +87,8 @@ function createGraph(entry) {
   for (const asset of queue) {
     asset.deps.forEach((relativePath) => {
       const child = createAsset(path.resolve("./example", relativePath));
-			console.log("%c Line:52 🥪 child", "color:#42b983", child);
-			asset.mapping[relativePath] = child.id;
+      console.log("%c Line:52 🥪 child", "color:#42b983", child);
+      asset.mapping[relativePath] = child.id;
       queue.push(child);
     });
   }
@@ -75,9 +102,9 @@ console.log("%c Line:61 🍆 resGraph", "color:#b03734", resGraph);
  * 构建图
  */
 function buildGraph(graph) {
-	const template = fs.readFileSync("./bundle.ejs", "utf-8");
-	
-	const data = graph.map((asset) => {
+  const template = fs.readFileSync("./bundle.ejs", "utf-8");
+
+  const data = graph.map((asset) => {
     const { id, code, mapping } = asset;
     return {
       id,
@@ -90,12 +117,12 @@ function buildGraph(graph) {
   console.log("%c Line:68 🍧 code", "color:#7f2b82", code);
 
   let outputPath = "./dist/bundle.js";
-  const context = {
-    changeOutputPath(path) {
-      outputPath = path;
-    },
-  };
-  hooks.emitFile.call(context);
+  // const context = {
+  //   changeOutputPath(path) {
+  //     outputPath = path;
+  //   },
+  // };
+  // hooks.emitFile.call(context);
   fs.writeFileSync(outputPath, code);
 }
 
