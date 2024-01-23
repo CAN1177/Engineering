@@ -1,4 +1,5 @@
 import { jsonLoader } from "./jsonLoader.js";
+import { ChangeOutputPath } from "./ChangeOutputPath.js";
 const webpackConfig = {
   module: {
     rules: [
@@ -8,6 +9,7 @@ const webpackConfig = {
       },
     ],
   },
+  plugins: [new ChangeOutputPath()],
 };
 
 export default webpackConfig;

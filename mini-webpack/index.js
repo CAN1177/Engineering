@@ -4,15 +4,14 @@ import traverse from "@babel/traverse";
 import path from "path";
 import ejs from "ejs";
 import { transformFromAst } from "babel-core";
-import  webpackConfig  from "./webpackConfig.js";
-
+import webpackConfig from "./webpackConfig.js";
+import { SyncHook } from "tapable";
+import { ChangeOutputPath } from "./ChangeOutputPath.js";
 let id = 0;
 
-
-
-// const hooks = {
-//   emitFile: new SyncHook(["context"]),
-// };
+const hooks = {
+  emitFile: new SyncHook(["context"]),
+};
 
 function createAsset(filePath) {
   // 1、获取文件内容
@@ -32,10 +31,10 @@ function createAsset(filePath) {
   loaders.forEach(({ test, use }) => {
     if (test.test(filePath)) {
       // source = use(source);
-      if (Array.isArray(use)) { 
+      if (Array.isArray(use)) {
         use.forEach((fn) => {
-          source = fn.call(loaderContext,source);
-        })
+          source = fn.call(loaderContext, source);
+        });
       }
     }
   });
@@ -98,6 +97,16 @@ function createGraph(entry) {
 const resGraph = createGraph("./example/main.js");
 console.log("%c Line:61 🍆 resGraph", "color:#b03734", resGraph);
 
+function initPlugins() {
+  const plugins = webpackConfig.plugins;
+
+  plugins.forEach((plugin) => {
+    plugin.apply(hooks);
+  });
+}
+
+initPlugins();
+
 /**
  * 构建图
  */
@@ -117,12 +126,12 @@ function buildGraph(graph) {
   console.log("%c Line:68 🍧 code", "color:#7f2b82", code);
 
   let outputPath = "./dist/bundle.js";
-  // const context = {
-  //   changeOutputPath(path) {
-  //     outputPath = path;
-  //   },
-  // };
-  // hooks.emitFile.call(context);
+  const context = {
+    changeOutputPath(path) {
+      outputPath = path;
+    },
+  };
+  hooks.emitFile.call(context);
   fs.writeFileSync(outputPath, code);
 }
 
